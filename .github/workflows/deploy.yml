@@ -1,15 +1,17 @@
-name: Deploy Next.js site to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main
+      - main  # déclenche le déploiement à chaque push sur main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -25,6 +27,9 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GH_PAT }}
-          publish_dir: ./out
-          branch: gh-pages
+          github_token: ${{ secrets.GH_PAT }} # utilise ton PAT secret
+          publish_dir: ./out                 # dossier de sortie du build
+          publish_branch: gh-pages           # branche de publication
+          user_name: "RD-bot99"
+          user_email: "RD-bot99@users.noreply.github.com"
+          allow_empty_commit: true
